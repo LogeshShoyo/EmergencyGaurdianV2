@@ -1,0 +1,95 @@
+name: Android CI
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  pull_request:
+    branches: [ "main", "master" ]
+
+jobs:
+  build:
+    name: Build Debug APK
+    runs-on: ubuntu-latest
+
+    steps:
+      # ── 1. Check out source ────────────────────────────────────────────────
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # ── 2. Set up JDK 17 ──────────────────────────────────────────────────
+      #    Android Gradle Plugin 8.x requires JDK 17.
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      # ── 3. Cache Gradle packages ───────────────────────────────────────────
+      #    Caches ~/.gradle/caches and ~/.gradle/wrapper to speed up subsequent runs.
+      - name: Cache Gradle packages
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
+      # ── 4. Grant execute permission for Gradle wrapper ─────────────────────
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      # ── 5. Build the debug APK ─────────────────────────────────────────────
+      #    ANDROID_HOME is pre-configured on GitHub Actions ubuntu-latest runners.
+      #    No local.properties needed — the runner already has the Android SDK.
+      - name: Build Debug APK
+        run: ./gradlew assembleDebug --no-daemon
+
+      # ── 6. Upload APK as workflow artifact ────────────────────────────────
+      #    The APK is retained for 7 days and downloadable from the Actions tab.
+      - name: Upload Debug APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: EmergencyGuardian-debug
+          path: app/build/outputs/apk/debug/app-debug.apk
+          retention-days: 7
+
+  # Optional: run lint checks in parallel with the build job
+  lint:
+    name: Lint Check
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Cache Gradle packages
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Run Lint
+        run: ./gradlew lintDebug --no-daemon
+
+      - name: Upload Lint Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lint-report
+          path: app/build/reports/lint-results-debug.html
+          retention-days: 7
