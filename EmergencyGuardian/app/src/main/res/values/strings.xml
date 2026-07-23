@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Emergency Guardian</string>
+    <string name="sos_button_label">SOS</string>
+    <string name="status_waiting">Waiting…</string>
+    <string name="status_sos_triggered">SOS Triggered</string>
+    <string name="status_holding">Holding…</string>
+
+    <!-- Dialog strings -->
+    <string name="dialog_bluetooth_title">Bluetooth Required</string>
+    <string name="dialog_bluetooth_message">Bluetooth is disabled. Please enable it to use Emergency Guardian.</string>
+    <string name="dialog_location_title">Location Required</string>
+    <string name="dialog_location_message">Location Services are disabled. Please enable them to use Emergency Guardian.</string>
+    <string name="dialog_open_settings">Open Settings</string>
+    <string name="dialog_dismiss">Dismiss</string>
+
+    <!-- Permission strings -->
+    <string name="permission_rationale_location">Location permission is required to scan for nearby Bluetooth devices.</string>
+    <string name="permission_rationale_bluetooth">Bluetooth permission is required to communicate with your emergency device.</string>
+
+    <!-- ESP32-C3 BLE connection status strings (BLEManager) -->
+    <string name="esp32_status_scanning">Scanning…</string>
+    <string name="esp32_status_connected">Connected</string>
+    <string name="esp32_status_disconnected">Disconnected</string>
+</resources>

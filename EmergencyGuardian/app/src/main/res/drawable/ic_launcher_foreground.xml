@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Simple "SOS" text as a vector drawable for the adaptive launcher icon foreground.
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M30,45 Q30,38 37,38 L45,38 Q52,38 52,45 Q52,52 45,52 L37,52 Q30,52 30,58 Q30,65 37,65 L45,65 Q52,65 52,58" />
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M58,38 L58,65" />
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M65,45 Q65,38 72,38 L80,38 Q87,38 87,45 Q87,52 80,52 L72,52 Q65,52 65,58 Q65,65 72,65 L80,65 Q87,65 87,58"
+        android:strokeWidth="5"
+        android:strokeColor="#FFFFFF"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round" />
+</vector>
